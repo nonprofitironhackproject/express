@@ -10,6 +10,9 @@ const logger       = require('morgan');
 const path         = require('path');
 
 
+console.log("blakatah");
+console.log("HI GROUP MEMBERS!");
+
 mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/irongenerate-express', {useMongoClient: true})
