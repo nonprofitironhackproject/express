@@ -18,6 +18,7 @@ mongoose
   .connect('mongodb://localhost/irongenerate-express', {useMongoClient: true})
   .then(() => {
     console.log('Connected to Mongo!')
+    console.log('kat will kidnap porkchop tonight!')
   }).catch(err => {
     console.error('Error connecting to mongo', err)
   });
