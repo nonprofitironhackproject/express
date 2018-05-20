@@ -21,11 +21,7 @@ mongoose.Promise = Promise;
 mongoose
   .connect('mongodb://localhost/irongenerate-express', {useMongoClient: true})
   .then(() => {
-<<<<<<< HEAD
-    console.log('Connected to Mongo!')
-=======
     console.log('Connected to Mongo!');
->>>>>>> e926174c08127baaf324943c9ca05ff81bcf8a72
   }).catch(err => {
     console.error('Error connecting to mongo', err);
   });
