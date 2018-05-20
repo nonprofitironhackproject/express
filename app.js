@@ -1,6 +1,5 @@
 require('dotenv').config();
 
-<<<<<<< HEAD
 const axios          = require("axios");
 const express        = require('express');
 const bodyParser     = require('body-parser');
@@ -17,18 +16,6 @@ const session        = require("express-session");
 
 // Models
 const User         = require('./models/user');
-=======
-const bodyParser   = require('body-parser');
-const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
-const mongoose     = require('mongoose');
-const logger       = require('morgan');
-const path         = require('path');
-
-
->>>>>>> 5b70e726f69827d472c5f08d03ed1a5ecdc1a499
 
 mongoose.Promise = Promise;
 mongoose
