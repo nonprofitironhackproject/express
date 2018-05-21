@@ -16,6 +16,7 @@ const session        = require("express-session");
 const flash          = require("connect-flash");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
+const app            = express();
 
 // Models
 const User         = require('./models/user');
@@ -31,8 +32,6 @@ mongoose
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
-
-const app = express();
 
 // Middleware Setup
 app.use(logger('dev'));
@@ -51,12 +50,64 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
-
 // default value for title local
-app.locals.title = 'Super Awesome Non-profit Portal';
+app.locals.title = 'Non-profit Portal';
+
+app.use(flash());
+
+//passport config area
+passport.serializeUser((user, cb) => {
+  cb(null, user._id);
+});
+
+passport.deserializeUser((id, cb) => {
+  User.findById(id, (err, user) => {
+    if (err) { return cb(err); }
+    cb(null, user);
+  });
+});
+
+passport.use(new LocalStrategy({
+  passReqToCallback: true
+  
+}, (req, username, password, next) => {
+  User.findOne({ username }, (err, user) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return next(null, false, { message: "Incorrect username" });
+    }
+    if (!bcrypt.compareSync(password, user.password)) {
+      return next(null, false, { message: "Incorrect password" });
+    }
+
+    return next(null, user);
+  });
+})); // end passport config area
+
+app.use(session({
+  secret: "our-passport-local-strategy-app",
+  resave: true,
+  saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(
+      cors({
+          credentials: true,                 // allow other domains to send cookies
+          origin: ["http://localhost:4200"]  // these are the domains that are allowed
+        })
+      );
+
+
 
 const index = require('./routes/index');
 app.use('/', index);
 
+
+const authAPI = require('./routes/auth-routes');
+app.use('/api', authAPI);
 
 module.exports = app;
