@@ -7,9 +7,11 @@ const ProfileSchema = new Schema ({
   image: String,
   about: String, 
   age: Number,
-  gender: String,
-
-
+  gender: {
+    type: String,
+    enum : ['MALE', 'FEMALE', 'PREFER NOT TO SAY'],
+    default : 'PREFER NOT TO SAY'
+  }
 }); 
 
 ProfileSchema.plugin(passportLocalMongoose);
