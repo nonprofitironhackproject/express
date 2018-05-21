@@ -9,14 +9,13 @@ const ensureLogin = require("connect-ensure-login");
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
-
-
 authRoutes.post("/signup", (req, res, next) => {
+  const email    = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
 
-  if (username === "" || password === "") {
-    res.status(400).json({ message: 'Provide username and password' });
+  if (email === "" || username === "" || password === "") {
+    res.status(400).json({ message: 'Provide email, username and password' });
     return;
   }
 
@@ -26,10 +25,17 @@ authRoutes.post("/signup", (req, res, next) => {
       return;
     }
 
+  // User.findOne({ email:email }, "email", (err, user) => {
+  //   if (email !== null) {
+  //     res.status(400).json({ message: 'Email already exists' });
+  //     return;
+  //   }
+    
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
 
     const theUser = new User({
+      email:    email,
       username: username,
       password: hashPass
     });
@@ -51,7 +57,6 @@ authRoutes.post("/signup", (req, res, next) => {
     });
   });
 });
-
 
 authRoutes.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, theUser, failureDetails) => {
@@ -82,7 +87,6 @@ authRoutes.post("/logout", (req, res) => {
   res.status(200).json({message: 'Success'});
 });
 
-
 authRoutes.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
     res.status(200).json(req.user);
@@ -91,44 +95,32 @@ authRoutes.get('/loggedin', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
 
-    res.redirect('/login')
+    res.redirect('/login');
   }
 }
 
-function checkRoles(role) {
-  return function(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === role) {
-      return next();
-    } else {
-      res.redirect('/')
-    }
-  }
-}
+// function checkRoles(role) {
+//   return function(req, res, next) {
+//     if (req.isAuthenticated() && req.user.role === role) {
+//       return next();
+//     } else {
+//       res.redirect('/')
+//     }
+//   }
+// }
 
-authRoutes.get('/private', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    res.json({ message: 'This is a private message' });
-    return;
-  }
+// authRoutes.get('/private', (req, res, next) => {
+//   if (req.isAuthenticated()) {
+//     res.json({ message: 'This is a private message' });
+//     return;
+//   }
 
-  res.status(403).json({ message: 'Unauthorized' });
-});
-
-
-authRoutes.get("/auth/google", passport.authenticate("google", {
-  scope: ["https://www.googleapis.com/auth/plus.login",
-          "https://www.googleapis.com/auth/plus.profile.emails.read"]
-}));
-
-authRoutes.get("/auth/google/callback", passport.authenticate("google", {
-  failureRedirect: "/",
-  successRedirect: "/private-page"
-}));
+//   res.status(403).json({ message: 'Unauthorized' });
+// });
 
 module.exports = authRoutes;
