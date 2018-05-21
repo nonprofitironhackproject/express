@@ -8,8 +8,6 @@ const ProfileSchema = new Schema ({
   about: String, 
   age: Number,
   gender: String,
-
-
 }); 
 
 ProfileSchema.plugin(passportLocalMongoose);
