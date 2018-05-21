@@ -1,9 +1,9 @@
-const express     = require("express");
+const express     = require('express');
 const authRoutes  = express.Router();
-const passport    = require("passport");
-const User        = require("../models/user"); // User model
-const flash       = require("connect-flash");
-const ensureLogin = require("connect-ensure-login");
+const passport    = require('passport');
+const User        = require('../models/user'); // User model
+const flash       = require('connect-flash');
+const ensureLogin = require('connect-ensure-login');
 
 // Bcrypt to encrypt passwords
 const bcrypt = require("bcrypt");
@@ -42,13 +42,15 @@ authRoutes.post("/signup", (req, res, next) => {
 
     theUser.save((err) => {
       if (err) {
-        res.status(400).json({ message: "Something went wrong" });
+        console.log('Error saving user ', err);
+        res.status(400).json({ message: 'Error saving user' });
         return;
       } 
 
       req.login(theUser, (err) => {
         if (err) {
-          res.status(500).json({ message: 'Something went wrong' });
+          console.log('Error logging in ', err);
+          res.status(500).json({ message: 'Error logging in' });
           return;
         }
 
@@ -82,7 +84,7 @@ authRoutes.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-authRoutes.post("/logout", (req, res) => {
+authRoutes.post('/logout', (req, res) => {
   req.logout();
   res.status(200).json({message: 'Success'});
 });
@@ -100,7 +102,7 @@ function ensureAuthenticated(req, res, next) {
     return next();
   } else {
 
-    res.redirect('/login');
+    res.redirect('/login')
   }
 }
 
@@ -122,5 +124,16 @@ function ensureAuthenticated(req, res, next) {
 
 //   res.status(403).json({ message: 'Unauthorized' });
 // });
+
+
+// authRoutes.get('/auth/google', passport.authenticate('google', {
+//   scope: ['https://www.googleapis.com/auth/plus.login',
+//           'https://www.googleapis.com/auth/plus.profile.emails.read']
+// }));
+
+// authRoutes.get('/auth/google/callback', passport.authenticate('google', {
+//   failureRedirect: '/',
+//   successRedirect: '/private-page'
+// }));
 
 module.exports = authRoutes;
