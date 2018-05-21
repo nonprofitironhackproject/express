@@ -53,10 +53,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
-app.locals.title = 'Super Awesome Non-profit Portal';
+app.locals.title = 'Non-profit Portal';
 
 const index = require('./routes/index');
 app.use('/', index);
 
+const user = require('./routes/auth-routes');
+app.use('/api', login);
 
-module.exports = app;
+
+module.exports = signup;
