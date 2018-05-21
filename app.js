@@ -13,6 +13,9 @@ const passport       = require("passport");
 const LocalStrategy  = require("passport-local").Strategy;
 const bcrypt         = require("bcrypt");
 const session        = require("express-session");
+const flash          = require("connect-flash");
+const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const cors           = require("cors");
 
 // Models
 const User         = require('./models/user');
@@ -54,5 +57,6 @@ app.locals.title = 'Super Awesome Non-profit Portal';
 
 const index = require('./routes/index');
 app.use('/', index);
+
 
 module.exports = app;
