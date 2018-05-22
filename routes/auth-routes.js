@@ -27,7 +27,7 @@ authRoutes.post("/signup", (req, res, next) => {
 
   // User.findOne({ email:email }, "email", (err, user) => {
   //   if (email !== null) {
-  //     res.status(400).json({ message: 'Email already exists' });
+  //     res.status(400).json({ message: 'Email already exists' })
   //     return;
   //   }
     
