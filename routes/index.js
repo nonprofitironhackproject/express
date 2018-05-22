@@ -6,6 +6,9 @@ const User    = require('../models/user')
 router.get('/', (req, res, next) => {
   res.render('index');
 });
-
+/* GET login page */
+router.get('/', (req, res, next) => {
+  res.render('index');
+});
 
 module.exports = router;
