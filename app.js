@@ -55,14 +55,30 @@ app.locals.title = 'Non-profit Portal';
 
 app.use(flash());
 
+
+app.use(
+  cors({
+      credentials: true,                 // allow other domains to send cookies
+      origin: ["http://localhost:4200"]  // these are the domains that are allowed
+    })
+);
+
+app.use(session({
+  secret: "our-passport-local-strategy-app",
+  resave: true,
+  saveUninitialized: true
+}));
+
+
 //passport config area
 passport.serializeUser((user, cb) => {
+  console.log("ser: ", user)
   cb(null, user._id);
 });
 
 passport.deserializeUser((id, cb) => {
   User.findById(id, (err, user) => {
-    if (err) { return cb(err); }
+    console.log("des: ", user)
     cb(null, user);
   });
 });
@@ -86,30 +102,25 @@ passport.use(new LocalStrategy({
   });
 })); // end passport config area
 
-app.use(session({
-  secret: "our-passport-local-strategy-app",
-  resave: true,
-  saveUninitialized: true
-}));
-
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-      cors({
-          credentials: true,                 // allow other domains to send cookies
-          origin: ["http://localhost:4200"]  // these are the domains that are allowed
-        })
-      );
 
 
+// ===================== Routes =====================
 
 const index = require('./routes/index');
 app.use('/', index);
 
 const user = require('./routes/auth-routes');
-app.use('/api', login);
+app.use('/api', user);
 
-const authAPI = require('./routes/auth-routes');
-app.use('/api', authAPI);
+// const user = require('./routes/auth-routes');
+// app.use('/api', login);
+
+// const authAPI = require('./routes/auth-routes');
+// app.use('/api', authAPI);
+
+
+// ====================================================
 
 module.exports = app;
