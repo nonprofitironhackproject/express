@@ -77,12 +77,46 @@ authRoutes.post('/login', (req, res, next) => {
         res.status(500).json({ message: 'Something went wrong' });
         return;
       }
-
       // We are now logged in (notice req.user)
       res.status(200).json(req.user);
     });
   })(req, res, next);
 });
+
+// authRoutes.post('/login', (req, res, next) => {
+//   // console.log(req.body.username)
+//   User.findOne({ username: req.body.username })
+//   .then((userFromDb) => {
+//     console.log("user from db =====>>>>>======>>>>>=====>>>>>>", userFromDb);
+//     if (userFromDb === null) {
+//       res.status(400).json({ message: "Username is invalid" });
+//       return;
+//     }
+//     const isPasswordGood = bcrypt.compareSync(req.body.password, userFromDb.password);
+
+//     console.log(userFromDb);
+
+//     if (isPasswordGood === false) {
+//       res.status(400).json({ message: "Password is invalid" });
+//       return;
+//     }
+//     req.login(userFromDb, (err) => {
+//       // clear the "encryptedPassword" before sending the user userInfo// (otherwise it's a security risk)
+//       userFromDb.password = undefined;
+
+//         res.status(200).json({
+//           isLoggedIn: true,
+//           userInfo: userFromDb
+//         });
+//     });
+//   })
+//   .catch((err) => {
+//     console.log("POST/login ERROR!");
+//     console.log(err);
+
+//     res.status(500).json({ error: "Log in database error" });
+//   });
+// });  // Post LogIn
 
 authRoutes.post('/logout', (req, res) => {
   req.logout();
@@ -102,11 +136,11 @@ function ensureAuthenticated(req, res, next) {
     return next();
   } else {
 
-    res.redirect('/login')
+    res.redirect('/login');
   }
 }
 
-// function checkRoles(role) {
+// function checkRoles(role) {ç
 //   return function(req, res, next) {
 //     if (req.isAuthenticated() && req.user.role === role) {
 //       return next();
