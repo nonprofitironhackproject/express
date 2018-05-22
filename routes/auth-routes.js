@@ -19,13 +19,13 @@ authRoutes.post("/signup", (req, res, next) => {
     return;
   }
 
-  User.findOne({ username:username }, "username", (err, user) => {
+  User.findOne({ username: username }, "username", (err, user) => {
     if (user !== null) {
       res.status(400).json({ message: 'Username already exists' });
       return;
     }
 
-  // User.findOne({ email:email }, "email", (err, user) => {
+  // User.findOne({ email: email }, "email", (err, user) => {
   //   if (email !== null) {
   //     res.status(400).json({ message: 'Email already exists' });
   //     return;

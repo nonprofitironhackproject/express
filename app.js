@@ -52,8 +52,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 // default value for title local
 app.locals.title = 'Non-profit Portal';
-<<<<<<< HEAD
-=======
 
 app.use(flash());
 
@@ -104,20 +102,11 @@ app.use(
       );
 
 
->>>>>>> 0682c596cea214c0ee51debfe003a745aab4bbff
 
 const index = require('./routes/index');
 app.use('/', index);
 
-const user = require('./routes/auth-routes');
-app.use('/api', login);
-
-<<<<<<< HEAD
-
-module.exports = signup;
-=======
 const authAPI = require('./routes/auth-routes');
 app.use('/api', authAPI);
 
 module.exports = app;
->>>>>>> 0682c596cea214c0ee51debfe003a745aab4bbff
