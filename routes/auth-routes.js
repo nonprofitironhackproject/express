@@ -23,12 +23,9 @@ router.post("/signup", (req, res, next) => {
       res.status(400).json({ message: 'Username already exists' });
       return;
     }
-
     
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
-
-
 
     const newUser = new User({
       email,
@@ -62,15 +59,11 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
   res.json(req.user);
 });
 
-  
-  
-  
 //============ LOGOUT===================
 router.post('/logout', (req, res) => {
   req.logout();
   res.status(200).json({message: 'Success'});
 });
-
 
 //============ LOGGEDIN ===================
 router.get('/loggedin', (req, res, next) => {
@@ -81,7 +74,7 @@ router.get('/loggedin', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-//============= private page ===============
+//============= PRIVATE PAGE ===============
 
 router.get('/private', (req, res, next) => {
   console.log(req.user)
@@ -92,8 +85,6 @@ router.get('/private', (req, res, next) => {
 
   res.json({ message: req.isAuthenticated() });
 });
-
-
 
 
 module.exports = router;
