@@ -60,9 +60,19 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
 });
 
 //============ LOGOUT===================
-router.post('/logout', (req, res) => {
+router.delete('/logout', (req, res) => {
   req.logout();
+  // req.session.destroy();
   res.status(200).json({message: 'Success'});
+});
+
+router.get('/userInfo', isLoggedIn, (req, res) => {
+  User.findById(req.user, function (err, fullUser) {
+    if (err) {
+      res.json(fullUser);
+      throw err;
+    }
+  });
 });
 
 //============ LOGGEDIN ===================
@@ -85,6 +95,14 @@ router.get('/private', (req, res, next) => {
 
   res.json({ message: req.isAuthenticated() });
 });
+
+function isLoggedIn (req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+        res.json(false);
+  }
+}
 
 
 module.exports = router;
