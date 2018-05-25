@@ -9,12 +9,11 @@ const hbs            = require('hbs');
 const mongoose       = require('mongoose');
 const logger         = require('morgan');
 const path           = require('path');
+const session        = require("express-session");
 const passport       = require("passport");
 const LocalStrategy  = require("passport-local").Strategy;
 const bcrypt         = require("bcrypt");
-const session        = require("express-session");
 const flash          = require("connect-flash");
-const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const cors           = require("cors");
 const app            = express();
 
@@ -37,7 +36,6 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 // Express View engine setup
 app.use(require('node-sass-middleware')({
@@ -50,25 +48,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
+
 // default value for title local
 app.locals.title = 'Non-profit Portal';
 
 app.use(flash());
-
-
-app.use(
-  cors({
-      credentials: true,                 // allow other domains to send cookies
-      origin: ["http://localhost:4200"]  // these are the domains that are allowed
-    })
-);
-
-app.use(session({
-  secret: "our-passport-local-strategy-app",
-  resave: true,
-  saveUninitialized: true
-}));
-
 
 //passport config area
 passport.serializeUser((user, cb) => {
@@ -78,7 +62,7 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser((id, cb) => {
   User.findById(id, (err, user) => {
-    console.log("des: ", user)
+    console.log("des: ", user);
     cb(null, user);
   });
 });
@@ -102,8 +86,25 @@ passport.use(new LocalStrategy({
   });
 })); // end passport config area
 
+app.use(session({
+  secret: "qwertyuiougfdcvbnmklplkmn",
+  resave: false, 
+  saveUninitialized: false, // Only creates cookies if a user is logged in.
+  cookie: { maxAge: 7200000 },
+  // store: sessionStore,
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cookieParser());
+
+
+app.use(
+  cors({
+      credentials: true,                 // allow other domains to send cookies
+      origin: ["http://localhost:4200"]  // these are the domains that are allowed
+    })
+);
 
 
 // ===================== Routes =====================
