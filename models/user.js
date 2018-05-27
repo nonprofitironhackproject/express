@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose              = require('mongoose');
+const Schema                = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 // const User = mongoose.model('User', UserSchema);
 
@@ -10,8 +10,8 @@ const userSchema = new Schema({
 },
 {
     timestamps: { 
-     createdAt: "created_at",
-     updatedAt: "updated_at"
+        createdAt: "created_at",
+        updatedAt: "updated_at"
     }
 });
 

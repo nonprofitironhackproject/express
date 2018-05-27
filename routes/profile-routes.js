@@ -5,11 +5,11 @@
 
 // module.exports = router;
 
-const express = require('express');
-const router = express.Router();
-const User        = require('../models/user'); // User model
-const Profile     = require('../models/profile'); // Profile model
-const loggedIn = require('../../utils/isAuthenticated');
+const express     = require('express');
+const router      = express.Router();
+const User        = require('../models/user'); 
+const Profile     = require('../models/profile'); 
+const loggedIn    = require('../../utils/isAuthenticated');
 
 router.get('/', (req, res, next) => {
     Profile
