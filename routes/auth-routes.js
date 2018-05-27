@@ -1,9 +1,15 @@
 const express     = require('express');
 const router      = express.Router();
 const passport    = require('passport');
+<<<<<<< HEAD
 const User        = require('../models/user'); // User model
 // const flash       = require('connect-flash');
 const bcrypt      = require("bcrypt"); // Bcrypt to encrypt passwords
+=======
+const User        = require('../models/user'); 
+
+const bcrypt      = require("bcrypt");
+>>>>>>> 4699be5332c0060ae711d737bc618d3968b639b1
 const bcryptSalt  = 10;
 
 

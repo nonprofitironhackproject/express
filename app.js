@@ -108,7 +108,6 @@ app.use(
 
 
 // ===================== Routes =====================
-
 const index = require('./routes/index');
 app.use('/', index);
 
