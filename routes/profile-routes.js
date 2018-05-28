@@ -1,48 +1,52 @@
-// const express     = require('express');
-// const router      = express.Router();
-// const User        = require('../models/user'); // User model
-// const Profile     = require('../models/profile'); // Profile model
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user'); // User model
+const Profile = require('../models/profile'); // Profile model
 
-// module.exports = router;
-
-const express     = require('express');
-const router      = express.Router();
-const User        = require('../models/user'); 
-const Profile     = require('../models/profile'); 
-const loggedIn    = require('../../utils/isAuthenticated');
-
-router.get('/', (req, res, next) => {
-    Profile
-        .find({user_id})
-        .populate('_author replies._author')
-        .exec((err, threads) => {
-            if (err) { return res.status(500).json(err); }
-
-            return res.status(200).json(threads);
+// Get details about a sepcific user.
+router.get('/:username', (req, res, next) => {
+    User.findById(req.params.user_id)
+        .then((theUser) => {
+            res.json(theUser);
+        })
+        .catch((err) => {
+            res.json(err);
         });
 });
 
-router.post('/', loggedIn, (req, res, next) => {
-    const newThread = new Thread({
-        _author: req.user._id,
-        title: req.body.title,
-        content: req.body.content
-        // profileImage: req.body.profileImage,
-        // backgroundImage: req.body.backgroundImage,
-        // firstName: req.body.firstName,
-        // lastName: req.body.lastName,
-        // aboutUser: req.body.aboutUser,
-        // age: req.body.age,
-        // gender: req.body.gender,
-        // volunteerExperience
-    });
+// Add new profile information.
+router.post('/edit/:username', (req, res, next) => {
+    console.log(req.body);
+    const profile = {
+        name: req.body.name,
+        aboutUser: req.body.aboutUser,
+        experience: req.body.experience,
+        skills: req.body.skills,
+        email: req.body.email,
+        phone: req.body.phone,
+        linkedin: req.body.linkedin,
+        facebook: req.body.facebook
+    };
+    Profile.create(profile)
+        .then((profileInfo) => {
+            console.log(profileInfo);
+            res.json(profileInfo);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+});
 
-    newThread.save((err) => {
-        if (err) { return res.status(500).json(err); }
-        if (newThread.errors) { return res.status(400).json(newThread); }
+router.post('/profile/update/:username', function (req, res) {
+    // User.findByIdAndUpdate(req.params.username, {
+    // })
+    //     .then(response => {
+    //         res.redirect(`/profile/${req.params.username}`)
+    //     })
+    //     .catch(theError => {
+    //         console.log(theError);
+    //     });
 
-        return res.status(200).json(newThread);
-    });
 });
 
 
