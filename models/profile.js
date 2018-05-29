@@ -12,21 +12,26 @@ const ProfileSchema = new Schema ({
   name: String,
   aboutUser: String, 
   age: Number,
+  email: String,
+  phone: String,
+  facebook: String,
+  linkedin: String,
   gender: {
     type: String,
     enum : ['MALE', 'FEMALE', 'PREFER NOT TO SAY'],
     default : 'PREFER NOT TO SAY'
   },
-  volunteerExperience: [{
-    type: String, 
-    detail: {
-      position: String,
-      dates: String,
-      location: String,
-      responsibilities: [{type: String}],
-      description: String,
-    }
-  }],
+  volunteerExperience: String,
+  // volunteerExperience: [{
+  //   type: String, 
+  //   detail: {
+  //     position: String,
+  //     dates: String,
+  //     location: String,
+  //     responsibilities: [{type: String}],
+  //     description: String,
+  //   }
+  // }],
   causes: [{
     type: String,
     enum: [
