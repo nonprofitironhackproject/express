@@ -9,25 +9,29 @@ const ProfileSchema = new Schema ({
   },
   profileImage: String,
   backgroundImage: String,
-  firstName: String,
-  lastName: String,
+  name: String,
   aboutUser: String, 
   age: Number,
+  email: String,
+  phone: String,
+  facebook: String,
+  linkedin: String,
   gender: {
     type: String,
     enum : ['MALE', 'FEMALE', 'PREFER NOT TO SAY'],
     default : 'PREFER NOT TO SAY'
   },
-  volunteerExperience: [{
-    type: String, 
-    detail: {
-      position: String,
-      dates: String,
-      location: String,
-      responsibilities: [{type:String}],
-      description: String,
-    }
-  }],
+  volunteerExperience: String,
+  // volunteerExperience: [{
+  //   type: String, 
+  //   detail: {
+  //     position: String,
+  //     dates: String,
+  //     location: String,
+  //     responsibilities: [{type: String}],
+  //     description: String,
+  //   }
+  // }],
   causes: [{
     type: String,
     enum: [
@@ -86,30 +90,3 @@ const ProfileSchema = new Schema ({
 
 ProfileSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model('profile', ProfileSchema);
-
-// const mongoose    = require('mongoose');
-// const Schema      = mongoose.Schema;
-// const ReplySchema = require('./reply.model').schema;
-
-// const ThreadSchema = new Schema({
-//   _author: {
-//     type: Schema.Types.ObjectId,
-//     ref: 'User'
-//   },
-//   title: {
-//     type: String,
-//     required: [true, "Title is required"]
-//   },
-//   content: {
-//     type: String,
-//     required: [true, "Content is required"]
-//   },
-//   date: {
-//     type: Date,
-//     default: Date.now
-//   },
-//   replies: [ ReplySchema ]
-// });
-
-// const Thread = mongoose.model('Thread', ThreadSchema);
-// module.exports = Thread;
