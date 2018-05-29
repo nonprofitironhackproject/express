@@ -21,6 +21,7 @@ router.post('/edit/:username', (req, res, next) => {
         name: req.body.name,
         aboutUser: req.body.aboutUser,
         experience: req.body.experience,
+        cause: req.body.cause,
         skills: req.body.skills,
         email: req.body.email,
         phone: req.body.phone,
@@ -37,6 +38,11 @@ router.post('/edit/:username', (req, res, next) => {
         });
 });
 
+router.post('/edit/:username', (req, res, next) => {
+console.log(req.params.user_id)
+
+})
+
 router.post('/profile/update/:username', function (req, res) {
     // User.findByIdAndUpdate(req.params.username, {
     // })
@@ -46,8 +52,18 @@ router.post('/profile/update/:username', function (req, res) {
     //     .catch(theError => {
     //         console.log(theError);
     //     });
+    console.log(req.body)
+    Task.findByIdAndUpdate(req.params.id, req.body)
+    .then((updatedTask)=>{
+      res.json(updatedTask)
+    })
+    .catch((err)=>{
+      res.json(err)
+    })
 
-});
+  });
+
+
 
 
 module.exports = router;
