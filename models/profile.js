@@ -79,7 +79,11 @@ const ProfileSchema = new Schema({
 });
 
 ProfileSchema.plugin(passportLocalMongoose);
+<<<<<<< HEAD
+module.exports = mongoose.model('profile', ProfileSchema);
+=======
 
 const ProfileModel = mongoose.model('ProfileUser', ProfileSchema);
 
 module.exports = ProfileModel;
+>>>>>>> 5a4c678c12a057bd12f06f7ffbd55981708ab28a

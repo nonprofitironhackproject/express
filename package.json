@@ -18,7 +18,12 @@
     "env": "0.0.2",
     "express": "~4.16.0",
     "express-session": "^1.15.6",
+<<<<<<< HEAD
+    "font-awesome": "^4.7.0",
+    "hbs": "^4.0.1",
+=======
     "jade": "^1.11.0",
+>>>>>>> 5a4c678c12a057bd12f06f7ffbd55981708ab28a
     "mongoose": "~4.13.4",
     "morgan": "^1.9.0",
     "nib": "^1.1.2",

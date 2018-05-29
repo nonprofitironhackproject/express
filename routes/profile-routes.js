@@ -29,6 +29,26 @@ router.get('/profile', (req, res, next) => {
         });
 });
 
+<<<<<<< HEAD
+// Add new profile information.
+router.post('/edit/:username', (req, res, next) => {
+    console.log(req.body);
+    const profile = {
+        name: req.body.name,
+        aboutUser: req.body.aboutUser,
+        experience: req.body.experience,
+        cause: req.body.cause,
+        skills: req.body.skills,
+        email: req.body.email,
+        phone: req.body.phone,
+        linkedin: req.body.linkedin,
+        facebook: req.body.facebook
+    };
+    Profile.create(profile)
+        .then((profileInfo) => {
+            console.log(profileInfo);
+            res.json(profileInfo);
+=======
 router.post('/edit', (req, res, next) => {
     
     if (!req.user) {
@@ -52,6 +72,7 @@ router.post('/edit', (req, res, next) => {
         .then(() => {
             console.log(theProfile);
             res.status(200).json(ProfileModel);
+>>>>>>> 5a4c678c12a057bd12f06f7ffbd55981708ab28a
         })
         .catch((error) => {
             console.log(error);
@@ -60,6 +81,34 @@ router.post('/edit', (req, res, next) => {
     });
 });
 
+<<<<<<< HEAD
+router.post('/edit/:username', (req, res, next) => {
+console.log(req.params.user_id)
+
+})
+
+router.post('/profile/update/:username', function (req, res) {
+    // User.findByIdAndUpdate(req.params.username, {
+    // })
+    //     .then(response => {
+    //         res.redirect(`/profile/${req.params.username}`)
+    //     })
+    //     .catch(theError => {
+    //         console.log(theError);
+    //     });
+    console.log(req.body)
+    Task.findByIdAndUpdate(req.params.id, req.body)
+    .then((updatedTask)=>{
+      res.json(updatedTask)
+    })
+    .catch((err)=>{
+      res.json(err)
+    })
+
+  });
+
+
+=======
 
 // // Get details about a sepcific user.
 // router.get('/:username', (req, res, next) => {
@@ -106,6 +155,7 @@ router.post('/edit', (req, res, next) => {
 //     //     });
 
 // });
+>>>>>>> 5a4c678c12a057bd12f06f7ffbd55981708ab28a
 
 
 module.exports = router;
