@@ -7,7 +7,7 @@ const userSchema = new Schema({
     email: String,
     username: String,
     password: String,
-    profile: Object,    
+    // profile: Object,    
 },
 {
     timestamps: { 
@@ -17,6 +17,7 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+
 userSchema.plugin(passportLocalMongoose);
+
 module.exports = User;
-    
