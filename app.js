@@ -108,12 +108,14 @@ app.use(
 
 
 // ===================== Routes =====================
-
 const index = require('./routes/index');
 app.use('/', index);
 
 const user = require('./routes/auth-routes');
 app.use('/api', user);
+
+const profile = require('./routes/profile-routes');
+app.use('/profile', profile);
 
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
