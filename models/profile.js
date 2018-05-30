@@ -18,8 +18,7 @@ const ProfileSchema = new Schema({
   backgroundImage: String,
   gender: {
     type: String,
-    enum: ['MALE', 'FEMALE', 'PREFER NOT TO SAY'],
-    default: 'PREFER NOT TO SAY'
+    enum: ['MALE', 'FEMALE', 'PREFER NOT TO SAY']
   },
   volunteerExperience: String,
   causes: [{
@@ -79,7 +78,6 @@ const ProfileSchema = new Schema({
 });
 
 // ProfileSchema.plugin(passportLocalMongoose);
-// module.exports = mongoose.model('profile', ProfileSchema);
 
 const ProfileModel = mongoose.model('ProfileUser', ProfileSchema);
 module.exports = ProfileModel;
