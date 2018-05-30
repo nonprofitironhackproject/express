@@ -20,7 +20,8 @@ const User = require('./models/user');
 
 mongoose.Promise = Promise;
 mongoose
-  .connect('mongodb://localhost/irongenerate-express', { useMongoClient: true })
+  // .connect('mongodb://localhost/irongenerate-express', { useMongoClient: true })
+  .connect(process.env.MONGODB_URI), { useMongoClient: true }
   .then(() => {
     console.log('Connected to Mongo!');
   }).catch(err => {
@@ -103,12 +104,16 @@ app.use(
 );
 
 // ===================== Routes =====================
-const user = require('./routes/auth-routes');
+
+const user = require('.,/routes/auth-routes');
 app.use('/api', user);
 
 const profile = require('./routes/profile-routes');
 app.use('/profile', profile);
 
+app.use((req, res, next)  => {
+  res.sendfile(__dirname + './public/angular/index.html');
+});
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
 
