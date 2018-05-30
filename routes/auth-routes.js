@@ -33,7 +33,7 @@ router.post("/signup", (req, res, next) => {
       username,
       password: hashPass
     });
-
+    
     newUser.save((err) => {
       if (err) {
         console.log('Error saving user ', err);

@@ -77,7 +77,7 @@ const ProfileSchema = new Schema({
   }]
 });
 
-ProfileSchema.plugin(passportLocalMongoose);
+// ProfileSchema.plugin(passportLocalMongoose);
 
 const ProfileModel = mongoose.model('ProfileUser', ProfileSchema);
 
