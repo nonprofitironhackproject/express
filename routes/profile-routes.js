@@ -14,8 +14,7 @@ router.get('/profile', (req, res, next) => {
     ProfileModel
         .find(
             {
-                user_id: req.user._id // Finds specific entries belonging to logged in user, 
-                // instead of showing "All" entries for ALL users on his dashboard.
+                user_id: req.user._id 
             }
         )
         .exec((err, profileResults) => {
@@ -24,7 +23,6 @@ router.get('/profile', (req, res, next) => {
                 res.status(500).json({ errorMessage: 'Finding entries went wrong' });
                 return;
             }
-
             res.status(200).json(profileResults);
         });
 });
@@ -33,20 +31,19 @@ router.post('/edit', (req, res, next) => {
     
     if (!req.user) {
         res.redirect("/");
-        // (prevents the rest of the code from running)
         return;
     }
     
     ProfileModel.findOne({user_id: req.user._id}) 
     .then((theProfile) => {
-        theProfile.name         = req.body.name;
-        theProfile.age          = req.body.age;
-        theProfile.aboutUser    = req.body.aboutUser;
-        theProfile.email        = req.body.email;
-        theProfile.phone        = req.body.phone;
-        theProfile.facebook     = req.body.facebook;
-        theProfile.linkedin     = req.body.linkedin;
-        theProfile.volunteerExperience = req.body.volunteerExperience;
+        theProfile.name            = req.body.name;
+        // theProfile.age          = req.body.age;
+        // theProfile.aboutUser    = req.body.aboutUser;
+        // theProfile.email        = req.body.email;
+        // theProfile.phone        = req.body.phone;
+        // theProfile.facebook     = req.body.facebook;
+        // theProfile.linkedin     = req.body.linkedin;
+        // theProfile.volunteerExperience = req.body.volunteerExperience;
 
         theProfile.save()
         .then(() => {
