@@ -85,7 +85,7 @@ router.delete('/logout', (req, res) => {
 });
 
 //============ GET USER INFO ===================
-router.get('/userInfo', isLoggedIn, (req, res) => {
+router.get('/userInfo', (req, res) => {
   User.findById(req.user, function (err, fullUser) {
     if (err) {
       res.json(fullUser);
@@ -97,6 +97,7 @@ router.get('/userInfo', isLoggedIn, (req, res) => {
 //============ LOGGEDIN ===================
 router.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log('000000000000000', req.session);
     res.status(200).json(req.user);
     return;
   }
