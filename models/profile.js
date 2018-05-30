@@ -18,8 +18,7 @@ const ProfileSchema = new Schema({
   backgroundImage: String,
   gender: {
     type: String,
-    enum: ['MALE', 'FEMALE', 'PREFER NOT TO SAY'],
-    default: 'PREFER NOT TO SAY'
+    enum: ['MALE', 'FEMALE', 'PREFER NOT TO SAY']
   },
   volunteerExperience: String,
   causes: [{
