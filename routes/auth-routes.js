@@ -1,15 +1,16 @@
-const express     = require('express');
-const router      = express.Router();
-const passport    = require('passport');
-const User        = require('../models/user'); 
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
 
-const bcrypt      = require("bcrypt");
-const bcryptSalt  = 10;
+const User = require('../models/user'); // User model
+const ProfileModel = require('../models/profile'); // Profile model
 
+const bcrypt = require("bcrypt");
+const bcryptSalt = 10;
 
 //============ SIGNUP ================
 router.post("/signup", (req, res, next) => {
-  const email    = req.body.email;
+  const email = req.body.email;
   const username = req.body.username;
   const password = req.body.password;
 
@@ -23,7 +24,7 @@ router.post("/signup", (req, res, next) => {
       res.status(400).json({ message: 'Username already exists' });
       return;
     }
-    
+
     const salt = bcrypt.genSaltSync(bcryptSalt);
     const hashPass = bcrypt.hashSync(password, salt);
 
@@ -32,13 +33,13 @@ router.post("/signup", (req, res, next) => {
       username,
       password: hashPass
     });
-
+    
     newUser.save((err) => {
       if (err) {
         console.log('Error saving user ', err);
         res.status(400).json({ message: 'Error saving user' });
         return;
-      } 
+      }
 
       req.login(newUser, (err) => {
         if (err) {
@@ -48,6 +49,20 @@ router.post("/signup", (req, res, next) => {
         }
 
         res.status(200).json(newUser);
+      });
+
+      const newProfile = new ProfileModel({
+        user_id: req.user._id
+      });
+
+      newProfile.save((err) => {
+        console.log("------------------new profile");
+        console.log(newProfile);
+        if (err) {
+          console.log('Error saving profile ', err.message);
+          res.status(400).json({ message: 'Error saving profile.' });
+          return;
+        }
       });
     });
   });
@@ -63,7 +78,7 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
 router.delete('/logout', (req, res) => {
   req.logout();
   // req.session.destroy();
-  res.status(200).json({message: 'Success'});
+  res.status(200).json({ message: 'Success' });
 });
 
 router.get('/userInfo', isLoggedIn, (req, res) => {
@@ -84,25 +99,34 @@ router.get('/loggedin', (req, res, next) => {
   res.status(403).json({ message: 'Unauthorized' });
 });
 
-//============= PRIVATE PAGE ===============
+// //============= PRIVATE PAGE ===============
+// router.get('/profile', (req, res, next) => {
 
-router.get('/private', (req, res, next) => {
-  console.log(req.user)
-  if (req.isAuthenticated()) {
-      res.status(200).json(req.user);
-      return;
-  }
+//   if (!req.user) {
+//     res.redirect("/");
+//     // (prevents the rest of the code from running)
+//     return;
+//   }
 
-  res.json({ message: req.isAuthenticated() });
-});
+//   ProfileModel.find({
+//     user_id: req.user._id
+//   });
 
-function isLoggedIn (req, res, next) {
+//   console.log(req.user);
+//   if (req.isAuthenticated()) {
+//     res.status(200).json(req.user);
+//     return;
+//   }
+
+//   res.json({ message: req.isAuthenticated() });
+// });
+
+function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-        res.json(false);
+    res.json(false);
   }
 }
-
 
 module.exports = router;

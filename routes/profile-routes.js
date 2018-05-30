@@ -1,49 +1,59 @@
-// const express     = require('express');
-// const router      = express.Router();
-// const User        = require('../models/user'); // User model
-// const Profile     = require('../models/profile'); // Profile model
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user'); // User model
+const ProfileModel = require('../models/profile'); // Profile model
 
-// module.exports = router;
+router.get('/userinfo', (req, res, next) => {
 
-const express     = require('express');
-const router      = express.Router();
-const User        = require('../models/user'); 
-const Profile     = require('../models/profile'); 
-const loggedIn    = require('../../utils/isAuthenticated');
+    if (!req.user) {
+        res.redirect("/");
+        // (prevents the rest of the code from running)
+        return;
+    }
 
-router.get('/', (req, res, next) => {
-    Profile
-        .find({user_id})
-        .populate('_author replies._author')
-        .exec((err, threads) => {
-            if (err) { return res.status(500).json(err); }
-
-            return res.status(200).json(threads);
+    ProfileModel
+        .find(
+            {
+                user_id: req.user._id 
+            }
+        )
+        .exec((err, profileResults) => {
+            if (err) {
+                console.log('Error finding entries', err);
+                res.status(500).json({ errorMessage: 'Finding entries went wrong' });
+                return;
+            }
+            res.status(200).json(profileResults);
         });
 });
 
-router.post('/', loggedIn, (req, res, next) => {
-    const newThread = new Thread({
-        _author: req.user._id,
-        title: req.body.title,
-        content: req.body.content
-        // profileImage: req.body.profileImage,
-        // backgroundImage: req.body.backgroundImage,
-        // firstName: req.body.firstName,
-        // lastName: req.body.lastName,
-        // aboutUser: req.body.aboutUser,
-        // age: req.body.age,
-        // gender: req.body.gender,
-        // volunteerExperience
-    });
+router.post('/edit', (req, res, next) => {
 
-    newThread.save((err) => {
-        if (err) { return res.status(500).json(err); }
-        if (newThread.errors) { return res.status(400).json(newThread); }
+    if (!req.user) {
+        res.redirect("/");
+        return;
+    }
+    
+    ProfileModel.findOne({user_id: req.user._id}) 
+    .then((theProfile) => {
+        theProfile.name         = req.body.name;
+        theProfile.age          = req.body.age;
+        theProfile.aboutUser    = req.body.aboutUser;
+        theProfile.email        = req.body.email;
+        theProfile.phone        = req.body.phone;
+        theProfile.facebook     = req.body.facebook;
+        theProfile.linkedin     = req.body.linkedin;
+        theProfile.volunteerExperience = req.body.volunteerExperience;
 
-        return res.status(200).json(newThread);
+        theProfile.save()
+        .then(() => {
+            console.log(theProfile);
+            res.status(200).json(ProfileModel);
+        })
+        .catch((error) => {
+            console.log(error);
+            next(error);
+        });
     });
 });
-
-
 module.exports = router;
