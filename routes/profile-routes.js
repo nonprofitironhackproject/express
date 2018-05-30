@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/user'); // User model
 const ProfileModel = require('../models/profile'); // Profile model
 
-router.get('/profile', (req, res, next) => {
+router.get('/userinfo', (req, res, next) => {
 
     if (!req.user) {
         res.redirect("/");
@@ -36,14 +36,14 @@ router.post('/edit', (req, res, next) => {
     
     ProfileModel.findOne({user_id: req.user._id}) 
     .then((theProfile) => {
-        theProfile.name            = req.body.name;
-        // theProfile.age          = req.body.age;
-        // theProfile.aboutUser    = req.body.aboutUser;
-        // theProfile.email        = req.body.email;
-        // theProfile.phone        = req.body.phone;
-        // theProfile.facebook     = req.body.facebook;
-        // theProfile.linkedin     = req.body.linkedin;
-        // theProfile.volunteerExperience = req.body.volunteerExperience;
+        theProfile.name         = req.body.name;
+        theProfile.age          = req.body.age;
+        theProfile.aboutUser    = req.body.aboutUser;
+        theProfile.email        = req.body.email;
+        theProfile.phone        = req.body.phone;
+        theProfile.facebook     = req.body.facebook;
+        theProfile.linkedin     = req.body.linkedin;
+        theProfile.volunteerExperience = req.body.volunteerExperience;
 
         theProfile.save()
         .then(() => {
