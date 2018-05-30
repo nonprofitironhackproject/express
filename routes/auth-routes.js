@@ -33,6 +33,8 @@ router.post("/signup", (req, res, next) => {
       username,
       password: hashPass
     });
+
+  
     
     newUser.save((err) => {
       if (err) {
@@ -62,7 +64,7 @@ router.post("/signup", (req, res, next) => {
           console.log('Error saving profile ', err.message);
           res.status(400).json({ message: 'Error saving profile.' });
           return;
-        }
+        } 
       });
     });
   });
@@ -72,6 +74,7 @@ router.post("/signup", (req, res, next) => {
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   console.log(req.user);
   res.json(req.user);
+  // this.router.navigate(['profile']); 
 });
 
 //============ LOGOUT===================
