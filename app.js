@@ -104,9 +104,6 @@ app.use(
 );
 
 // ===================== Routes =====================
-app.use((req, res, next)  => {
-  res.sendfile(__dirname + '/public/angular/index.html');
-});
 
 const user = require('.,/routes/auth-routes');
 app.use('/api', user);
@@ -114,6 +111,9 @@ app.use('/api', user);
 const profile = require('./routes/profile-routes');
 app.use('/profile', profile);
 
+app.use((req, res, next)  => {
+  res.sendfile(__dirname + './public/angular/index.html');
+});
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
 
