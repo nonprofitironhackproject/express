@@ -20,8 +20,8 @@ const User = require('./models/user');
 
 mongoose.Promise = Promise;
 mongoose
-  .connect(process.env.MONGODB_URI, { useMongoClient: true })
-  // .connect('mongodb://localhost/irongenerate-express', { useMongoClient: true })
+  // .connect(process.env.MONGODB_URI, { useMongoClient: true })
+  .connect('mongodb://localhost/irongenerate-express', { useMongoClient: true })
   .then(() => {
     console.log('Connected to Mongo!');
   }).catch(err => {
@@ -122,7 +122,7 @@ app.use('/profile', profile);
 // ====================================================
 
 app.use((req, res, next) => {
-  res.sendfile(__dirname + `/public/name / index.html`);
+  res.sendfile(__dirname + `/public/angular/index.html`);
 });
 
 
