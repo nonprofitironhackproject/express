@@ -33,6 +33,8 @@ router.post("/signup", (req, res, next) => {
       username,
       password: hashPass
     });
+
+  
     
     newUser.save((err) => {
       if (err) {
@@ -62,7 +64,7 @@ router.post("/signup", (req, res, next) => {
           console.log('Error saving profile ', err.message);
           res.status(400).json({ message: 'Error saving profile.' });
           return;
-        }
+        } 
       });
     });
   });
@@ -70,18 +72,31 @@ router.post("/signup", (req, res, next) => {
 
 //============ LOGIN ===================
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   res.json(req.user);
+  // this.router.navigate(['profile']); 
 });
 
-//============ LOGOUT===================
-router.delete('/logout', (req, res) => {
-  req.logout();
-  // req.session.destroy();
+// //============ LOGOUT ===================
+// router.delete('/logout', (req, res) => {
+//   req.logout();
+//   // req.session.destroy();
+//   res.status(200).json({ message: 'Success' });
+// });
+ 
+//============ LOGOUT ===================
+router.post('/logout', (req, res) => {
+  console.log("user in logout backend ", req.user);
+  // res.clearCookie('connect.sid', { path: '/profile' });
+  req.session.destroy();
+  req.logOut();
+  console.log("user in logout backend ", req.user);
+  // console.log('Inside the logout----------_!');
   res.status(200).json({ message: 'Success' });
 });
 
-router.get('/userInfo', isLoggedIn, (req, res) => {
+//============ GET USER INFO ===================
+router.get('/userInfo', (req, res) => {
   User.findById(req.user, function (err, fullUser) {
     if (err) {
       res.json(fullUser);
@@ -92,41 +107,22 @@ router.get('/userInfo', isLoggedIn, (req, res) => {
 
 //============ LOGGEDIN ===================
 router.get('/loggedin', (req, res, next) => {
+  
+  console.log('user in the backend loggedin route-->', req.user);
+
   if (req.isAuthenticated()) {
-    res.status(200).json(req.user);
-    return;
+    return res.status(200).json(req.user);
   }
-  res.status(403).json({ message: 'Unauthorized' });
+
+  return res.status(403).json({ message: 'Unauthorized' });
 });
 
-// //============= PRIVATE PAGE ===============
-// router.get('/profile', (req, res, next) => {
-
-//   if (!req.user) {
-//     res.redirect("/");
-//     // (prevents the rest of the code from running)
-//     return;
-//   }
-
-//   ProfileModel.find({
-//     user_id: req.user._id
-//   });
-
-//   console.log(req.user);
+// function isLoggedIn(req, res, next) {
 //   if (req.isAuthenticated()) {
-//     res.status(200).json(req.user);
-//     return;
+//     return next();
+//   } else {
+//     return res.json(false);
 //   }
-
-//   res.json({ message: req.isAuthenticated() });
-// });
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.json(false);
-  }
-}
+// }
 
 module.exports = router;
