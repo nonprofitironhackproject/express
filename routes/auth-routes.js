@@ -77,14 +77,15 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
   // this.router.navigate(['profile']); 
 });
 
-//============ LOGOUT===================
+//============ LOGOUT ===================
 router.delete('/logout', (req, res) => {
   req.logout();
   // req.session.destroy();
   res.status(200).json({ message: 'Success' });
 });
 
-router.get('/userInfo', isLoggedIn, (req, res) => {
+//============ GET USER INFO ===================
+router.get('/userInfo', (req, res) => {
   User.findById(req.user, function (err, fullUser) {
     if (err) {
       res.json(fullUser);
@@ -96,33 +97,12 @@ router.get('/userInfo', isLoggedIn, (req, res) => {
 //============ LOGGEDIN ===================
 router.get('/loggedin', (req, res, next) => {
   if (req.isAuthenticated()) {
+    console.log('000000000000000', req.session);
     res.status(200).json(req.user);
     return;
   }
   res.status(403).json({ message: 'Unauthorized' });
 });
-
-// //============= PRIVATE PAGE ===============
-// router.get('/profile', (req, res, next) => {
-
-//   if (!req.user) {
-//     res.redirect("/");
-//     // (prevents the rest of the code from running)
-//     return;
-//   }
-
-//   ProfileModel.find({
-//     user_id: req.user._id
-//   });
-
-//   console.log(req.user);
-//   if (req.isAuthenticated()) {
-//     res.status(200).json(req.user);
-//     return;
-//   }
-
-//   res.json({ message: req.isAuthenticated() });
-// });
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {

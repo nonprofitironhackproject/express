@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 core-js@2.5.6
 MIT
 Copyright (c) 2014-2018 Denis Pushkarev
@@ -43,6 +44,11 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+=======
+font-awesome@4.7.0
+(OFL-1.1 AND MIT)
+(OFL-1.1 AND MIT)
+>>>>>>> 9de02213989e9f6276512286440f1b4f2d871a04
 
 bootstrap@4.1.1
 MIT
@@ -69,6 +75,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+<<<<<<< HEAD
 font-awesome@4.7.0
 (OFL-1.1 AND MIT)
 (OFL-1.1 AND MIT)
@@ -133,6 +140,11 @@ MIT
 The MIT License (MIT)
 
 Copyright (c) 2015-2018 Angular ng-bootstrap team
+=======
+core-js@2.5.6
+MIT
+Copyright (c) 2014-2018 Denis Pushkarev
+>>>>>>> 9de02213989e9f6276512286440f1b4f2d871a04
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -152,11 +164,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+<<<<<<< HEAD
 angular-font-awesome@3.1.2
 MIT
 The MIT License
 
 Copyright (c) 2017
+=======
+zone.js@0.8.26
+MIT
+The MIT License
+
+Copyright (c) 2016-2018 Google, Inc.
+>>>>>>> 9de02213989e9f6276512286440f1b4f2d871a04
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -378,6 +398,7 @@ Apache License
  distributed under the License is distributed on an "AS IS" BASIS,
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
+<<<<<<< HEAD
  limitations under the License.
 
 tslib@1.9.1
@@ -437,3 +458,6 @@ If the Work includes a "NOTICE" text file as part of its distribution, then any 
 9. Accepting Warranty or Additional Liability. While redistributing the Work or Derivative Works thereof, You may choose to offer, and charge a fee for, acceptance of support, warranty, indemnity, or other liability obligations and/or rights consistent with this License. However, in accepting such obligations, You may act only on Your own behalf and on Your sole responsibility, not on behalf of any other Contributor, and only if You agree to indemnify, defend, and hold each Contributor harmless for any liability incurred by, or claims asserted against, such Contributor by reason of your accepting any such warranty or additional liability.
 
 END OF TERMS AND CONDITIONS
+=======
+ limitations under the License.
+>>>>>>> 9de02213989e9f6276512286440f1b4f2d871a04

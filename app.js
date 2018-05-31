@@ -87,8 +87,8 @@ passport.use(new LocalStrategy({
 
 app.use(session({
   secret: "qwertyuiougfdcvbnmklplkmn",
-  resave: false,
-  saveUninitialized: false, // Only creates cookies if a user is logged in.
+  resave: true,
+  saveUninitialized: true, // Only creates cookies if a user is logged in.
   cookie: { maxAge: 7200000 },
   // store: sessionStore,
 }));
@@ -106,12 +106,16 @@ app.use(
 );
 
 // ===================== Routes =====================
-const user = require('./routes/auth-routes');
-app.use('/api', user);
-
 const profile = require('./routes/profile-routes');
 app.use('/profile', profile);
 
+const user = require('./routes/auth-routes');
+app.use('/api', user);
+
+
+// app.use((req, res, next)  => {
+//   res.sendfile(__dirname + './public/angular/index.html');
+// });
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
 
