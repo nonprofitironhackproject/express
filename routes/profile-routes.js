@@ -37,14 +37,19 @@ router.get('/userinfo/:id', (req, res, next) => {
 });
 
 router.post('/edit', (req, res, next) => {
-
+console.log('hellotest1');
+console.log(req.body.name);
+console.log(req.user._id);
     if (!req.user) {
+
         res.redirect("/");
         return;
     }
-    
-    ProfileModel.findOne({user_id: req.user._id}) 
+    console.log("hellotest2");
+    ProfileModel.findOne({_id: req.user.email}) 
     .then((theProfile) => {
+        console.log(req.body);
+        console.log(theProfile);
         theProfile.name         = req.body.name;
         theProfile.age          = req.body.age;
         theProfile.aboutUser    = req.body.aboutUser;
@@ -54,6 +59,11 @@ router.post('/edit', (req, res, next) => {
         theProfile.linkedin     = req.body.linkedin;
         theProfile.twitter      = req.body.twitter;
         theProfile.volunteerExperience = req.body.volunteerExperience;
+
+
+        // Contact.findById(id, (err, contact) => { if (err) { res.status(500).send(err); } else { res.json(contact); } });
+
+
 
         theProfile.save()
         .then(() => {

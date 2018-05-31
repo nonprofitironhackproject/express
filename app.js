@@ -70,7 +70,9 @@ passport.use(new LocalStrategy({
   passReqToCallback: true
 
 }, (req, username, password, next) => {
+  console.log('line73appjs -> ', username)
   User.findOne({ username }, (err, user) => {
+    console.log('line74appjs -> ',user)
     if (err) {
       return next(err);
     }
