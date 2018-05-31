@@ -14,6 +14,7 @@ const ProfileSchema = new Schema({
   phone: String,
   facebook: String,
   linkedin: String,
+  twitter: String,
   profileImage: String,
   backgroundImage: String,
   gender: {

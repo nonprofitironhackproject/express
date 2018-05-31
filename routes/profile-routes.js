@@ -52,6 +52,7 @@ router.post('/edit', (req, res, next) => {
         theProfile.phone        = req.body.phone;
         theProfile.facebook     = req.body.facebook;
         theProfile.linkedin     = req.body.linkedin;
+        theProfile.twitter      = req.body.twitter;
         theProfile.volunteerExperience = req.body.volunteerExperience;
 
         theProfile.save()
