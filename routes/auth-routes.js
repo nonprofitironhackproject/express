@@ -1,8 +1,8 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const passport = require('passport');
-const User = require('../models/user'); // User model
-const ProfileModel = require('../models/profile'); // Profile model
+const passport = require("passport");
+const User = require("../models/user"); // User model
+const ProfileModel = require("../models/profile"); // Profile model
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
@@ -13,13 +13,13 @@ router.post("/signup", (req, res, next) => {
   const password = req.body.password;
 
   if (email === "" || username === "" || password === "") {
-    res.status(400).json({ message: 'Provide email, username and password' });
+    res.status(400).json({ message: "Provide email, username and password" });
     return;
   }
 
   User.findOne({ email }, "email", (err, user) => {
     if (user !== null) {
-      res.status(400).json({ message: 'Username already exists' });
+      res.status(400).json({ message: "Username already exists" });
       return;
     }
 
@@ -32,17 +32,17 @@ router.post("/signup", (req, res, next) => {
       password: hashPass
     });
 
-    newUser.save((err) => {
+    newUser.save(err => {
       if (err) {
-        console.log('Error saving user ', err);
-        res.status(400).json({ message: 'Error saving user' });
+        console.log("Error saving user ", err);
+        res.status(400).json({ message: "Error saving user" });
         return;
       }
 
-      req.login(newUser, (err) => {
+      req.login(newUser, err => {
         if (err) {
-          console.log('Error logging in ', err);
-          res.status(500).json({ message: 'Error logging in' });
+          console.log("Error logging in ", err);
+          res.status(500).json({ message: "Error logging in" });
           return;
         }
 
@@ -53,39 +53,39 @@ router.post("/signup", (req, res, next) => {
         user_id: req.user._id
       });
 
-      newProfile.save((err) => {
+      newProfile.save(err => {
         console.log("------------------new profile");
         console.log(newProfile);
         if (err) {
-          console.log('Error saving profile ', err.message);
-          res.status(400).json({ message: 'Error saving profile.' });
+          console.log("Error saving profile ", err.message);
+          res.status(400).json({ message: "Error saving profile." });
           return;
-        } 
+        }
       });
     });
   });
 });
 
 //============ LOGIN ===================
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
+router.post("/login", passport.authenticate("local"), (req, res, next) => {
   // console.log(req.user);
   res.json(req.user);
-  // this.router.navigate(['profile']); 
+  // this.router.navigate(['profile']);
 });
 
 //============ LOGOUT ===================
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
   console.log("user in logout backend ", req.user);
   // res.clearCookie('connect.sid', { path: '/profile' });
   req.session.destroy();
   req.logOut();
   console.log("user in logout backend ", req.user);
   // console.log('Inside the logout----------_!');
-  res.status(200).json({ message: 'Success' });
+  res.status(200).json({ message: "Success" });
 });
 
 //============ GET USER INFO ===================
-router.get('/userInfo', (req, res) => {
+router.get("/userInfo", (req, res) => {
   User.findById(req.user, function (err, fullUser) {
     if (err) {
       res.json(fullUser);
@@ -95,15 +95,14 @@ router.get('/userInfo', (req, res) => {
 });
 
 //============ LOGGEDIN ===================
-router.get('/loggedin', (req, res, next) => {
-  
-  console.log('user in the backend loggedin route-->', req.user);
+router.get("/loggedin", (req, res, next) => {
+  console.log("user in the backend loggedin route-->", req.user);
 
   if (req.isAuthenticated()) {
     return res.status(200).json(req.user);
   }
 
-  return res.status(403).json({ message: 'Unauthorized' });
+  return res.status(403).json({ message: "Unauthorized" });
 });
 
 module.exports = router;
