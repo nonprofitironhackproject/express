@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
 const User = require('../models/user'); // User model
 const ProfileModel = require('../models/profile'); // Profile model
-
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
@@ -34,8 +32,6 @@ router.post("/signup", (req, res, next) => {
       password: hashPass
     });
 
-  
-    
     newUser.save((err) => {
       if (err) {
         console.log('Error saving user ', err);
@@ -77,13 +73,6 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
   // this.router.navigate(['profile']); 
 });
 
-// //============ LOGOUT ===================
-// router.delete('/logout', (req, res) => {
-//   req.logout();
-//   // req.session.destroy();
-//   res.status(200).json({ message: 'Success' });
-// });
- 
 //============ LOGOUT ===================
 router.post('/logout', (req, res) => {
   console.log("user in logout backend ", req.user);
@@ -116,13 +105,5 @@ router.get('/loggedin', (req, res, next) => {
 
   return res.status(403).json({ message: 'Unauthorized' });
 });
-
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     return next();
-//   } else {
-//     return res.json(false);
-//   }
-// }
 
 module.exports = router;

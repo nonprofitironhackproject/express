@@ -5,21 +5,11 @@ const User = require('../models/user'); // User model
 const ProfileModel = require('../models/profile'); // Profile model
 
 router.get('/userinfo/:id', (req, res, next) => {
+
     if ( !req.user){
         return res.status(403).json({message: "Login to see the details."})
     }
 
-    // console.log('start of user info');
-    // console.log(req.session);
-
-    // if (!req.isAuthenticated()) {
-    //     console.log('no user!');
-        
-    //     // (prevents the rest of the code from running)
-    //     return;
-    // }
-
-    // console.log('outside if');
     ProfileModel
         .find(
             {
@@ -33,8 +23,6 @@ router.get('/userinfo/:id', (req, res, next) => {
                 res.status(500).json({ errorMessage: 'Finding entries went wrong' });
                 return;
             }
-            // console.log('!-----------------------!');            
-            // console.log(profileResults);
             res.status(200).json(profileResults);
         });
 });
