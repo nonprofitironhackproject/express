@@ -6,17 +6,10 @@ const ProfileModel = require('../models/profile'); // Profile model
 
 router.get('/userinfo/:id', (req, res, next) => {
 
-    // console.log('start of user info');
-    // console.log(req.session);
+    if ( !req.user){
+        return res.status(403).json({message: "Login to see the details."})
+    }
 
-    // if (!req.isAuthenticated()) {
-    //     console.log('no user!');
-        
-    //     // (prevents the rest of the code from running)
-    //     return;
-    // }
-
-    console.log('outside if');
     ProfileModel
         .find(
             {
@@ -30,8 +23,6 @@ router.get('/userinfo/:id', (req, res, next) => {
                 res.status(500).json({ errorMessage: 'Finding entries went wrong' });
                 return;
             }
-            console.log('!-----------------------!');            
-            console.log(profileResults);
             res.status(200).json(profileResults);
         });
 });
@@ -42,7 +33,8 @@ console.log(req.body.name);
 console.log(req.user._id);
     if (!req.user) {
 
-        res.redirect("/");
+        res.status(403).json({message: "You're not allowed here. Log in first."})
+        // res.redirect("/");
         return;
     }
     console.log("hellotest2");

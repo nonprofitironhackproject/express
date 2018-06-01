@@ -41,6 +41,8 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Express View engine setup
 app.use(require('node-sass-middleware')({
@@ -49,19 +51,18 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(flash());
 
 //passport config area
 passport.serializeUser((user, cb) => {
-  console.log("ser: ", user);
+  // console.log("ser: ", user);
   cb(null, user._id);
 });
 
 passport.deserializeUser((id, cb) => {
   User.findById(id, (err, user) => {
-    console.log("des: ", user);
+    // console.log("des: ", user);
     cb(null, user);
   });
 });
@@ -89,15 +90,14 @@ passport.use(new LocalStrategy({
 
 app.use(session({
   secret: "qwertyuiougfdcvbnmklplkmn",
-  resave: true,
-  saveUninitialized: true, // Only creates cookies if a user is logged in.
-  cookie: { maxAge: 7200000 },
+  resave: false,
+  saveUninitialized: false, // Only creates cookies if a user is logged in.
+  // cookie: { maxAge: 7200000 },
   // store: sessionStore,
 }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cookieParser());
 
 
 app.use(
@@ -118,6 +118,7 @@ app.use('/api', user);
 // app.use((req, res, next)  => {
 //   res.sendfile(__dirname + './public/angular/index.html');
 // });
+
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
 

@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-
 const User = require('../models/user'); // User model
 const ProfileModel = require('../models/profile'); // Profile model
-
 const bcrypt = require("bcrypt");
 const bcryptSalt = 10;
 
@@ -34,8 +32,6 @@ router.post("/signup", (req, res, next) => {
       password: hashPass
     });
 
-  
-    
     newUser.save((err) => {
       if (err) {
         console.log('Error saving user ', err);
@@ -72,15 +68,19 @@ router.post("/signup", (req, res, next) => {
 
 //============ LOGIN ===================
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   res.json(req.user);
   // this.router.navigate(['profile']); 
 });
 
 //============ LOGOUT ===================
-router.delete('/logout', (req, res) => {
-  req.logout();
-  // req.session.destroy();
+router.post('/logout', (req, res) => {
+  console.log("user in logout backend ", req.user);
+  // res.clearCookie('connect.sid', { path: '/profile' });
+  req.session.destroy();
+  req.logOut();
+  console.log("user in logout backend ", req.user);
+  // console.log('Inside the logout----------_!');
   res.status(200).json({ message: 'Success' });
 });
 
@@ -96,20 +96,14 @@ router.get('/userInfo', (req, res) => {
 
 //============ LOGGEDIN ===================
 router.get('/loggedin', (req, res, next) => {
-  if (req.isAuthenticated()) {
-    console.log('000000000000000', req.session);
-    res.status(200).json(req.user);
-    return;
-  }
-  res.status(403).json({ message: 'Unauthorized' });
-});
+  
+  console.log('user in the backend loggedin route-->', req.user);
 
-function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.json(false);
+    return res.status(200).json(req.user);
   }
-}
+
+  return res.status(403).json({ message: 'Unauthorized' });
+});
 
 module.exports = router;
