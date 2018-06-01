@@ -110,10 +110,9 @@ app.use('/profile', profile);
 const user = require('./routes/auth-routes');
 app.use('/api', user);
 
-
-// app.use((req, res, next)  => {
-//   res.sendfile(__dirname + './public/angular/index.html');
-// });
+app.use((req, res, next)  => {
+  res.sendfile(__dirname + './public/angular/index.html');
+});
 
 // const user = require('./routes/auth-routes');
 // app.use('/api', login);
