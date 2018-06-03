@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose              = require("mongoose");
+const Schema                = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const ProfileSchema = new Schema({
@@ -24,7 +24,7 @@ const ProfileSchema = new Schema({
   volunteerExperience: String,
   causes: [
     {
-      type: String,
+      type: String
       // enum: [
       //   "Community",
       //   "Children & Youth",

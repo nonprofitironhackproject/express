@@ -86,7 +86,7 @@ router.post("/logout", (req, res) => {
 
 //============ GET USER INFO ===================
 router.get("/userInfo", (req, res) => {
-  User.findById(req.user, function (err, fullUser) {
+  User.findById(req.user, function(err, fullUser) {
     if (err) {
       res.json(fullUser);
       throw err;
